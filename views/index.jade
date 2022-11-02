@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Hello
+  p Logged in #{loggedIn}
+  p Cookies:
+
+  pre
+    code #{JSON.stringify(cookies, null, 2)}
+
+  if !loggedIn
+    form(method="POST" action="/login")
+      button login
+  else
+    form(method="get" action="/logout")
+      button logout
