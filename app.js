@@ -26,7 +26,15 @@ app.get("/", function (req, res, next) {
 });
 
 app.post("/login", function (req, res, next) {
-  res.cookie(COOKIE_NAME, "yes", { maxAge: 900000, httpOnly: true });
+  res.cookie(COOKIE_NAME, "yes", {
+    maxAge: 900_000,
+    httpOnly: true,
+    secure: true,
+  });
+  res.setHeader(
+    "Cache-Control",
+    "public, s-max-age=86400, stale-while-revalidate=3600"
+  );
   res.redirect("/");
 });
 
