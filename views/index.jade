@@ -1,16 +1,22 @@
 extends layout
 
 block content
-  h1 Hello
+  h1 Test
   p Logged in #{loggedIn}
-  p Cookies:
-
-  pre
-    code #{JSON.stringify(cookies, null, 2)}
 
   if !loggedIn
     form(method="POST" action="/login")
       button login
   else
-    form(method="get" action="/logout")
-      button logout
+    div
+      form(method="GET" action="/logout")
+        button logout form GET
+      form(method="POST" action="/logout")
+        button logout form POST
+
+      a(href="/logout") logout link GET
+
+  p Cookies:
+
+  pre
+    code #{JSON.stringify(cookies, null, 2)}
