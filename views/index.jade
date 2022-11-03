@@ -2,8 +2,7 @@ extends layout
 
 block content
   h1 Playground
-  p Time: #{time}
-  p Logged in #{loggedIn}
+
 
   h2 Controls
 
@@ -19,7 +18,10 @@ block content
 
   h2 Debug
 
-  p Cookies:
+  p Time: #{time}
 
+  p Logged in #{loggedIn}
+
+  p Cookies:
   pre
     code #{JSON.stringify(cookies, null, 2)}
