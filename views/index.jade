@@ -1,20 +1,23 @@
 extends layout
 
 block content
-  h1 Test
+  h1 Playground
+  p Time: #{time}
   p Logged in #{loggedIn}
+
+  h2 Controls
 
   if !loggedIn
     form(method="POST" action="/login")
       button login
   else
-    div
-      form(method="GET" action="/logout")
-        button logout form GET
-      form(method="POST" action="/logout")
-        button logout form POST
+    form(method="GET" action="/logout")
+      button logout form GET
+    form(method="POST" action="/logout")
+      button logout form POST
+    a(href="/logout") logout link GET
 
-      a(href="/logout") logout link GET
+  h2 Debug
 
   p Cookies:
 
