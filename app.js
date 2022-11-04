@@ -8,7 +8,7 @@ const logger = require("morgan");
 //
 
 const PORT = 3000;
-const COOKIE_NAME = "auth_test";
+const COOKIE_NAME = "cookie_test";
 
 //
 // Express setup
@@ -28,9 +28,6 @@ app.use(express.static(path.join(__dirname, "public")));
 //
 
 app.get("/", function (req, res, next) {
-  res.setHeader("Cache-Control", "public, max-age=0");
-  res.setHeader("Expires", "Fri, 04 Nov 2022 07:59:12 GMT");
-
   res.render("index", {
     cookies: req.cookies,
     loggedIn: Boolean(req.cookies[COOKIE_NAME]),
@@ -39,24 +36,22 @@ app.get("/", function (req, res, next) {
 });
 
 app.post("/login", function (req, res, next) {
-  res.cookie(COOKIE_NAME, "yes", {
-    maxAge: 900_000,
-    httpOnly: true,
-    secure: true,
-  });
-  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=yes; expires=Thu; expires=Tue, 01 Jan 2030 00:00:00 GMT; Max-Age=7948800; path=/; SameSite=Lax`
+  );
 
   res.redirect("/");
 });
 
-const logout = function (req, res, next) {
-  res.clearCookie(COOKIE_NAME);
-  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+app.post("/logout", function (req, res, next) {
+  res.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; path=/; SameSite=Lax`
+  );
 
   res.redirect("/");
-};
-app.get("/logout", logout);
-app.post("/logout", logout);
+});
 
 //
 // Start the app

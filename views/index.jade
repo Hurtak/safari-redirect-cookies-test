@@ -10,18 +10,29 @@ block content
     form(method="POST" action="/login")
       button login
   else
-    form(method="GET" action="/logout")
-      button logout form GET
     form(method="POST" action="/logout")
-      button logout form POST
-    a(href="/logout") logout link GET
+      button logout
 
   h2 Debug
 
   p Time: #{time}
 
-  p Logged in #{loggedIn}
+  p Logged in #{String(loggedIn).toUpperCase()}
 
-  p Cookies:
+  p "Cookie" header read on server:
   pre
     code #{JSON.stringify(cookies, null, 2)}
+
+  p document.cookie read on client:
+  pre
+    code(id="cookies-client")
+
+  script.
+    const cookies = document.cookie
+      .split(';')
+      .map(s => s.trim())
+      .map(s => s.split('=').map(c => c.trim()))
+      .map(c => ({key: c[0], value: c[1]}))
+      .reduce((acc, c) => ({...acc, [c.key]: c.value}), {});;
+    const el = document.querySelector('#cookies-client');
+    el.innerText = JSON.stringify(cookies, null, 2);
