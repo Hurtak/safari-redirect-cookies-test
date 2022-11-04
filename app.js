@@ -36,19 +36,13 @@ app.get("/", function (req, res, next) {
 });
 
 app.post("/login", function (req, res, next) {
-  res.setHeader(
-    "Set-Cookie",
-    `${COOKIE_NAME}=yes; expires=Thu; expires=Tue, 01 Jan 2030 00:00:00 GMT; Max-Age=7948800; path=/`
-  );
+  res.setHeader("Set-Cookie", `${COOKIE_NAME}=yes; Max-Age=1000000; path=/`);
 
   res.redirect("/");
 });
 
 app.post("/logout", function (req, res, next) {
-  res.setHeader(
-    "Set-Cookie",
-    `${COOKIE_NAME}=deleted; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; HttpOnly; path=/`
-  );
+  res.setHeader("Set-Cookie", `${COOKIE_NAME}=deleted; Max-Age=0; HttpOnly; path=/`);
 
   res.redirect("/");
 });
